@@ -50,14 +50,17 @@ function init() {
 function addTodo(event) {
     // Make sure page doesn't reload on button press.
     event.preventDefault();
-
+    let i = 0;
     // Grab value of todo input box.
-    const todoListInput = "";
+    const todoListInput = document.querySelector('#new-todo').value;
     // Put that value at the end of our list.
-    todos.push(todoListInput);
+    if(todoListInput.length > 0) {
+        todos.push(todoListInput);
     // Update our html.
-    
+        updateTodosOl();
+    }
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function removeTodo(event) {
