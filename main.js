@@ -9,6 +9,7 @@
 const todos = [];
 // An array for our completed todos.
 const completed = [];
+let awaitingDeconstruction = [];
 
 // Tell the browser to run init when the html is loaded.
 window.onload = init;
@@ -89,7 +90,7 @@ function completeTodo(event) {
     // Move todo at that index to the completed list.
     if(removedTodoItem > 0 && removedTodoItem <= todos.length) {
         const itemAwaitingAppend = todos.splice((removedTodoItem - 1), 1);
-        completed.push(itemAwaitingAppend);
+        completed.push(itemAwaitingAppend + " √");
         // Update our html.
         updateCompletedOl();
         updateTodosOl();
@@ -138,7 +139,13 @@ function markUncomplete(event) {
     // Move completed at that index to the todo list.
     if(isMarkedUncomplete > 0 && isMarkedUncomplete <= completed.length) {
         const removeFromCompleted = completed.splice((isMarkedUncomplete - 1), 1);
-        todos.push(removeFromCompleted);
+        awaitingDeconstruction.push(removeFromCompleted);
+        let str = awaitingDeconstruction.toString();
+        const removeCheckMark = str.split(' ');
+        removeCheckMark.pop();
+        todos.push(removeCheckMark.join(' '));
+        awaitingDeconstruction = [];
+        str = '';
         // Update our html.
         updateCompletedOl();
         updateTodosOl();
@@ -180,6 +187,7 @@ function resetAllInputs() {
 
 // Use this function to update the todos ol to reflect the state of our todos
 // list.
+// function clear
 function updateTodosOl() {
     // Grab the todos ol.
     const ol = document.querySelector('#todos-list');
