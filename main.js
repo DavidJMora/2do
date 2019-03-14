@@ -68,13 +68,10 @@ function removeTodo(event) {
 
     // Grab value that's in user's removal index input box.
     const removalInput = document.querySelector('#todo-removal-index').value;
-    console.log(removalInput);
     const isRemovalInput = Number(removalInput);
-    console.log(isRemovalInput);
     // Remove todo at that index.
     if(isRemovalInput > 0) {
         todos.splice((isRemovalInput - 1) , 1);
-        console.log('hello');
     // Update our html.
         updateTodosOl();
     }
@@ -87,12 +84,18 @@ function completeTodo(event) {
     event.preventDefault();
 
     // Grab value that's in user's todo completion index input box.
-
+    const itemToBeCompleted = document.querySelector('#todo-complete-index').value;
+    const removedTodoItem = Number(itemToBeCompleted);
     // Move todo at that index to the completed list.
-
-    // Update our html.
-
+    if(removedTodoItem > 0) {
+        const itemAwaitingAppend = todos.splice((removedTodoItem - 1), 1);
+        completed.push(itemAwaitingAppend);
+        // Update our html.
+        updateCompletedOl();
+        updateTodosOl();
+    }
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function clearTodos(event) {
@@ -100,8 +103,11 @@ function clearTodos(event) {
     event.preventDefault();
 
     // Clear all todos from the list.
-
+    while(todos.length > 0) {
+        todos.pop();
+    }
     // Update our html.
+    updateTodosOl();
 }
 
 function removeCompleted(event) {
@@ -109,25 +115,36 @@ function removeCompleted(event) {
     event.preventDefault();
 
     // Grab value that's in user's removal index input box.
-
+    const completedItemToRemove = document.querySelector('#completed-removal-index').value;
+    const isCompletedItemToRemove = Number(completedItemToRemove);
     // Remove todo at that index.
-
+    if(isCompletedItemToRemove > 0) {
+        completed.splice((isCompletedItemToRemove - 1), 1);
+    }
     // Update our html.
+    updateCompletedOl();
 
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function markUncomplete(event) {
     // Make sure page doesn't reload on button press.
-    event.preventDefault();
-
+    
     // Grab value that's in user's todo completion index input box.
-
-    // Move todo at that index to the completed list.
-
-    // Update our html.
-
-    // Reset all input fields.
+    event.preventDefault();
+    const markedUncomplete = document.querySelector('#mark-uncomplete-index').value;
+    const isMarkedUncomplete = Number(markedUncomplete);
+    // Move completed at that index to the todo list.
+    if(isMarkedUncomplete > 0) {
+        const removeFromCompleted = completed.splice((isMarkedUncomplete - 1), 1);
+        todos.push(removeFromCompleted);
+        // Update our html.
+        updateCompletedOl();
+        updateTodosOl();
+        // Reset all input fields.
+    }
+        resetAllInputs();
 }
 
 function clearComplete(event) {
@@ -135,8 +152,11 @@ function clearComplete(event) {
     event.preventDefault();
 
     // Clear all todos from the list.
-
+    while(completed.length > 0){
+        completed.pop();
+    }
     // Update our html.
+    updateCompletedOl();
 }
 
 
