@@ -50,7 +50,6 @@ function init() {
 function addTodo(event) {
     // Make sure page doesn't reload on button press.
     event.preventDefault();
-    let i = 0;
     // Grab value of todo input box.
     const todoListInput = document.querySelector('#new-todo').value;
     // Put that value at the end of our list.
@@ -68,12 +67,19 @@ function removeTodo(event) {
     event.preventDefault();
 
     // Grab value that's in user's removal index input box.
-
+    const removalInput = document.querySelector('#todo-removal-index').value;
+    console.log(removalInput);
+    const isRemovalInput = Number(removalInput);
+    console.log(isRemovalInput);
     // Remove todo at that index.
-
+    if(isRemovalInput > 0) {
+        todos.splice((isRemovalInput - 1) , 1);
+        console.log('hello');
     // Update our html.
-
+        updateTodosOl();
+    }
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function completeTodo(event) {
