@@ -70,7 +70,7 @@ function removeTodo(event) {
     const removalInput = document.querySelector('#todo-removal-index').value;
     const isRemovalInput = Number(removalInput);
     // Remove todo at that index.
-    if(isRemovalInput > 0) {
+    if(isRemovalInput > 0 && isRemovalInput <= todos.length) {
         todos.splice((isRemovalInput - 1) , 1);
     // Update our html.
         updateTodosOl();
@@ -87,7 +87,7 @@ function completeTodo(event) {
     const itemToBeCompleted = document.querySelector('#todo-complete-index').value;
     const removedTodoItem = Number(itemToBeCompleted);
     // Move todo at that index to the completed list.
-    if(removedTodoItem > 0) {
+    if(removedTodoItem > 0 && removedTodoItem <= todos.length) {
         const itemAwaitingAppend = todos.splice((removedTodoItem - 1), 1);
         completed.push(itemAwaitingAppend);
         // Update our html.
@@ -118,7 +118,7 @@ function removeCompleted(event) {
     const completedItemToRemove = document.querySelector('#completed-removal-index').value;
     const isCompletedItemToRemove = Number(completedItemToRemove);
     // Remove todo at that index.
-    if(isCompletedItemToRemove > 0) {
+    if(isCompletedItemToRemove > 0 && isCompletedItemToRemove <= completed.length) {
         completed.splice((isCompletedItemToRemove - 1), 1);
     }
     // Update our html.
@@ -136,7 +136,7 @@ function markUncomplete(event) {
     const markedUncomplete = document.querySelector('#mark-uncomplete-index').value;
     const isMarkedUncomplete = Number(markedUncomplete);
     // Move completed at that index to the todo list.
-    if(isMarkedUncomplete > 0) {
+    if(isMarkedUncomplete > 0 && isMarkedUncomplete <= completed.length) {
         const removeFromCompleted = completed.splice((isMarkedUncomplete - 1), 1);
         todos.push(removeFromCompleted);
         // Update our html.
