@@ -9,7 +9,7 @@
 const todos = [];
 // An array for our completed todos.
 const completed = [];
-let awaitingDeconstruction = [];
+
 
 // Tell the browser to run init when the html is loaded.
 window.onload = init;
@@ -94,6 +94,7 @@ function completeTodo(event) {
         // Update our html.
         updateCompletedOl();
         updateTodosOl();
+        console.log(completed);
     }
     // Reset all input fields.
     resetAllInputs();
@@ -131,21 +132,17 @@ function removeCompleted(event) {
 
 function markUncomplete(event) {
     // Make sure page doesn't reload on button press.
-    
+    event.preventDefault();    
     // Grab value that's in user's todo completion index input box.
-    event.preventDefault();
     const markedUncomplete = document.querySelector('#mark-uncomplete-index').value;
     const isMarkedUncomplete = Number(markedUncomplete);
     // Move completed at that index to the todo list.
     if(isMarkedUncomplete > 0 && isMarkedUncomplete <= completed.length) {
         const removeFromCompleted = completed.splice((isMarkedUncomplete - 1), 1);
-        awaitingDeconstruction.push(removeFromCompleted);
-        let str = awaitingDeconstruction.toString();
+        let str = removeFromCompleted.toString();
         const removeCheckMark = str.split(' ');
         removeCheckMark.pop();
         todos.push(removeCheckMark.join(' '));
-        awaitingDeconstruction = [];
-        str = '';
         // Update our html.
         updateCompletedOl();
         updateTodosOl();
